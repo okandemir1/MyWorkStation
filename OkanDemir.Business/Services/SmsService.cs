@@ -11,12 +11,12 @@ namespace OkanDemir.Business.Services
             {
                 string smsResult = HTTPPoster(
                 "<SingleTextSMS>" +
-                "<UserName>OKANDEMIR-7214</UserName>" +
-                "<PassWord>123456</PassWord>" +
+                "<UserName></UserName>" +
+                "<PassWord></PassWord>" +
                 "<Action>0</Action>" +
                 "<Mesgbody>" + message + "</Mesgbody>" +
                 "<Numbers>" + phoneNumber + "</Numbers>" +
-                "<Originator>KeskeDeme</Originator>" +
+                "<Originator></Originator>" +
                 "<SDate></SDate>" +
                 "<ExDate></ExDate>" +
                 "</SingleTextSMS>"
