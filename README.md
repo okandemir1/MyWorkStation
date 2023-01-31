@@ -11,7 +11,9 @@ Burada şifrelerimi saklıyorum db çalınsa yada başka biri ele geçirse ne ol
 Burada şifreleme işlemi yaparken "Key" diye bir alanım var "Key" e verilen değer ile şifreleme işlemi yapılıyor 
 
 Örnek 
+
 a kişi adını okan yaptı key olarak 1 girdi şifrelenmiş veri - 123456abcd
+
 b kişi adını okan yaptı key olarak 2 girdi şifrelenmiş veri - 456789dsqw
 
 Burada şifremizi gizleyen "Key" oluyor buda benim verimin güvenliğini yükseltiyor. MVC ile geliştirirken 10 kere yanlış girince veriyi siliyordu şimdi burada kaldırdım onu belki ilerde yine eklerim :)
