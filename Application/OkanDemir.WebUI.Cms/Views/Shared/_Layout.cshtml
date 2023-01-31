@@ -1,0 +1,267 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+    <link href="~/_admin/css/phosphor_icons.css" rel="stylesheet" type="text/css">
+    <link href="~/_admin/css/limitless.css" rel="stylesheet" type="text/css">
+    <link href="~/_admin/css/custom.css" rel="stylesheet" type="text/css">
+    
+    @RenderSection("styles", false)
+
+
+    <link href="~/_admin/img/favicon.ico" sizes="128x128" rel="shortcut icon" type="image/x-icon" />
+    <link href="~/_admin/img/favicon.ico" sizes="128x128" rel="shortcut icon" />
+
+</head>
+<body>
+    <div class="navbar navbar-dark navbar-expand-lg navbar-static border-bottom border-bottom-white border-opacity-10">
+        <div class="navbar-brand">
+            <a href="/" class="d-inline-block" style="font-size: 16px;color: #fff;">
+                Burada Olan Burada Kalır :)
+            </a>
+        </div>
+
+        <div class="d-flex d-lg-none me-2">
+            <button type="button" class="navbar-toggler sidebar-mobile-main-toggle rounded-pill">
+                <i class="ph-list"></i>
+            </button>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-mobile">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="#" class="navbar-nav-link sidebar-control sidebar-main-toggle d-none d-md-block">
+                        <i class="icon-paragraph-justify3"></i>
+                    </a>
+                </li>
+            </ul>
+            <span class="badge bg-success ml-md-3 mr-md-auto">Aktif</span>
+        </div>
+    </div>
+
+    <div class="page-content">
+        <div class="sidebar sidebar-dark sidebar-main sidebar-expand-lg">
+			<div class="sidebar-content">
+				<div class="sidebar-section">
+					<div class="sidebar-section-body d-flex justify-content-center">
+						<h5 class="sidebar-resize-hide flex-grow-1 my-auto">Menü</h5>
+                        <div>
+                            <button type="button" class="btn btn-flat-white btn-icon btn-sm rounded-pill border-transparent sidebar-control sidebar-main-resize d-none d-lg-inline-flex">
+                                <i class="ph-arrows-left-right"></i>
+                            </button>
+
+                            <button type="button" class="btn btn-flat-white btn-icon btn-sm rounded-pill border-transparent sidebar-mobile-main-toggle d-lg-none">
+                                <i class="ph-x"></i>
+                            </button>
+                        </div>
+					</div>
+				</div>
+
+				<div class="sidebar-section">
+					<ul class="nav nav-sidebar" data-nav-type="accordion">
+                        <li class="nav-item"><a href="/" class="nav-link"><i class="ph-house"></i><span>Dashboard</span></a></li>
+                        <li class="nav-item"><a href="@Url.Action("Index","Archive")" class="nav-link"><i class="ph-power"></i><span>Arşivler</span></a></li>
+                        <li class="nav-item"><a href="@Url.Action("Index","Income")" class="nav-link"><i class="ph-money"></i><span>Gelirler</span></a></li>
+                        <li class="nav-item"><a href="@Url.Action("Index","Invoice")" class="nav-link"><i class="ph-envelope-simple"></i><span>Faturalar</span></a></li>
+                        <li class="nav-item"><a href="@Url.Action("Index","Expense")" class="nav-link"><i class="ph-currency-circle-dollar"></i><span>Harcamalar</span></a></li>
+                        <li class="nav-item"><a href="@Url.Action("Index","Subscription")" class="nav-link"><i class="ph-currency-circle-dollar"></i><span>Abonelikler</span></a></li>
+                        <li class="nav-item nav-item-submenu">
+                            <a href="#" class="nav-link">
+                                <i class="ph-note-pencil"></i>
+                                <span>Not</span>
+                            </a>
+                            <ul class="nav-group-sub collapse" style="">
+                                <li class="nav-item"><a href="@Url.Action("Index","Note")" class="nav-link">Not Ekle</a></li>
+                                <li class="nav-item"><a href="@Url.Action("Hashtag","Note")" class="nav-link">Hashtags</a></li>
+                                <li class="nav-item"><a href="@Url.Action("Metion","Note")" class="nav-link">Metions</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a href="@Url.Action("Index","CodeNote")" class="nav-link"><i class="ph-code"></i><span>Kod Örneklerim</span></a></li>
+                        <li class="nav-item nav-item-submenu">
+                            <a href="#" class="nav-link">
+                                <i class="ph-note-pencil"></i>
+                                <span>Ayarlar</span>
+                            </a>
+                            <ul class="nav-group-sub collapse" style="">
+                                <li class="nav-item"><a href="@Url.Action("Index","ArchiveCategory")" class="nav-link">Arşiv Kategorileri</a></li>
+                                <li class="nav-item"><a href="@Url.Action("Index","IncomeType")" class="nav-link">Gelir Tipleri</a></li>
+                                <li class="nav-item"><a href="@Url.Action("Index","InvoiceType")" class="nav-link">Fatura Tipleri</a></li>
+                                <li class="nav-item"><a href="@Url.Action("Index","CodeCategory")" class="nav-link">Kod Kategorileri</a></li>
+                                <li class="nav-item"><a href="@Url.Action("Index","SubscriptionType")" class="nav-link">Abonelik Tipleri</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a href="@Url.Action("Logout","Auth")" class="nav-link"><i class="ph-power"></i><span>Çıkış Yap</span></a></li>
+					</ul>
+				</div>
+
+			</div>
+			
+		</div>
+
+        <div class="content-wrapper">
+            <div class="content-inner">
+            @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    <script src="~/_admin/js/sweet_alert.min.js"></script>
+    <script src="~/_admin/js/jquery.min.js"></script>
+    <script src="~/_admin/js/bootstrap.bundle.min.js"></script>
+    <script src="~/_admin/js/blockui.min.js"></script>
+    <script src="~/_admin/js/d3.min.js"></script>
+    <script src="~/_admin/js/d3_tooltip.js"></script>
+    <script src="~/_admin/js/switchery.min.js"></script>
+    <script src="~/_admin/js/bootstrap_multiselect.js"></script>
+    <script src="~/_admin/js/moment.min.js"></script>
+    <script src="~/_admin/js/daterangepicker.js"></script>
+    <script src="~/_admin/js/datepicker.min.js"></script>
+    <script src="~/_admin/js/main.js"></script>
+    <script src="~/_admin/js/pnotify.min.js"></script>
+    <script src="~/_admin/js/select2.min.js"></script>
+    <script src="~/_admin/js/interactions.min.js"></script>
+    <script src="~/_admin/js/select2.min.js"></script>
+    <script src="~/_admin/js/anytime.min.js"></script>
+    <script src="~/_admin/js/validator.min.js"></script>
+    <script src="~/_admin/js/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/_admin/js/jquery.dataTables.min.js"></script>
+    <script src="~/_admin/js/layout.js"></script>
+    <script src="~/_admin/js/app.js"></script>
+
+    <script type="text/javascript">
+        const layoutJsHelper = (function () {
+            const swalInit = swal.mixin({
+                buttonsStyling: false,
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger',
+                    denyButton: 'btn btn-danger',
+                    input: 'form-control'
+                }
+            });
+
+            function passive(url, id) {
+                swalInit.fire({
+                    title: 'Emin misiniz?',
+                    text: "Seçtiğiniz veri sistemde pasif olarak işaretlenecektir.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Evet, Pasif Et',
+                    cancelButtonText: 'İptal',
+                    buttonsStyling: false,
+                    customClass: {
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-danger'
+                    }
+                }).then(function (result) {
+                    if (result.value) {
+                        $.get("/" + url + "/Passive/" + id, function (e) {
+                            if (e.isSucceed) {
+                                swalInit.fire({
+                                    title: "Başarılı",
+                                    text: e.message,
+                                    icon: "success"
+                                }).then((willClick) => {
+                                    location.reload();
+                                });
+                            }
+                            else {
+                                swalInit.fire({
+                                    title: "Hay Aksi",
+                                    text: e.message,
+                                    icon: "warning"
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+            function active(url, id) {
+                swalInit.fire({
+                    title: 'Emin misiniz?',
+                    text: "Seçtiğiniz veri sistemde aktif olarak işaretlenecektir.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Evet, Aktif Et',
+                    cancelButtonText: 'İptal',
+                    buttonsStyling: false,
+                    customClass: {
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-danger'
+                    }
+                }).then(function (result) {
+                    if (result.value) {
+                        $.get("/" + url + "/Active/" + id, function (e) {
+                            if (e.isSucceed) {
+                                swalInit.fire({
+                                    title: "Başarılı",
+                                    text: e.message,
+                                    icon: "success"
+                                }).then((willClick) => {
+                                    location.reload();
+                                });
+                            }
+                            else {
+                                swalInit.fire({
+                                    title: "Hay Aksi",
+                                    text: e.message,
+                                    icon: "warning"
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+            function deleteItem(url, id) {
+                swalInit.fire({
+                    title: 'Emin misiniz?',
+                    text: "Seçtiğiniz veri sistemden silinecektir.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Evet, Sil',
+                    cancelButtonText: 'İptal',
+                    buttonsStyling: false,
+                    customClass: {
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-danger'
+                    }
+                }).then(function (result) {
+                    if (result.value) {
+                        $.get("/" + url + "/Delete/" + id, function (e) {
+                            if (e.isSucceed) {
+                                swalInit.fire({
+                                    title: "Başarılı",
+                                    text: e.message,
+                                    icon: "success"
+                                }).then((willClick) => {
+                                    location.reload();
+                                });
+                            }
+                            else {
+                                swalInit.fire({
+                                    title: "Hay Aksi",
+                                    text: e.message,
+                                    icon: "warning"
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+            return {
+                passive: passive,
+                active: active,
+                deleteItem: deleteItem,
+            };
+        }());
+
+        document.documentElement.setAttribute('data-color-theme', 'dark');
+    </script>
+
+    @RenderSection("scripts", false)
+</body>
+</html>

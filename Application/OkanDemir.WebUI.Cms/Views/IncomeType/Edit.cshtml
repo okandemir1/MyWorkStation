@@ -1,0 +1,49 @@
+﻿@model IncomeTypeDto
+
+@{
+    var title = "Gelir Tipi Düzenle";
+    ViewData["Title"] = "Kategori Düzenleme";
+}
+
+@Html.Raw(bread.BreadCrumb(
+    new List<Bc>() {
+        new Bc("Dashboard", Url.Action("Index","Home")),
+        new Bc("Liste", Url.Action("Index","IncomeType")),
+        new Bc(title , "")
+    }
+))
+
+@Html.Raw(pageHeader.MainHeader(
+    title,
+    "",
+    "Listeye Dön",
+    Url.Action("Index","IncomeType")
+))
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">@title</h5>
+                </div>
+                <div class="card-body">
+                    @await Component.InvokeAsync("IncomeTypeForm", new { action = "Edit", Model = Model })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+ 
+
+@section Styles
+    {
+    @await Html.PartialAsync("Components/IncomeTypeForm/_IncomeTypeFormStylesPartial")
+}
+
+    @section Scripts
+    {
+    @await Html.PartialAsync("Components/IncomeTypeForm/_IncomeTypeFormScriptsPartial")
+}

@@ -1,0 +1,33 @@
+﻿@model IncomeTypeDto
+
+    <form asp-action="@ViewBag.Action" enctype="multipart/form-data"
+          data-ajax="true" data-ajax-method="POST"
+          data-ajax-success="OnFormSuccess">
+
+        @Html.Raw(ViewResultHelperExtension.ViewResult(ViewBag.Result))
+
+        @Html.Raw(formHelper.InputTextRow("Gelir Adı", Model.Name, "Name"))
+        @Html.Raw(formHelper.InputTextRow("Açıklama", Model.Description, "Description"))
+        @Html.Raw(formHelper.InputTextRow("Ödeme Periyodu", Model.Period, "Period"))
+        @Html.Raw(formHelper.InputTextRow("Ödenmesi Gereken Tutar", Model.TotalPrice, "TotalPrice"))
+        @Html.Raw(formHelper.InputTextRow("İş Veren Adı Soyadı", Model.ContactName, "ContactName"))
+        @Html.Raw(formHelper.InputTextRow("İş Veren Mail", Model.ContactMail, "ContactMail"))
+        @Html.Raw(formHelper.InputTextRow("İş Veren Telefon", Model.ContactPhone, "ContactPhone"))
+
+        <div class="form-check form-switch mb-2">
+            <label class="form-check-label">Aktif Mi?</label>
+            @Html.CheckBoxFor(a => a.IsActive, new { @class = "form-check-input" })
+        </div>
+
+        <input asp-for="UserId" value="@User.GetUserId()" type="hidden" />
+        @if (Model != null && Model.Id > 0)
+        {
+            <input asp-for="Id" type="hidden" />
+            @Html.Raw(formHelper.UpdateButtonRow("Güncelle"))
+        }
+        else
+        {
+            @Html.Raw(formHelper.SubmitButtonRow("Ekle"))
+        }
+
+    </form>

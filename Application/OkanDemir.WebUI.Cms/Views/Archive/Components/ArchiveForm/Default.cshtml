@@ -1,0 +1,70 @@
+﻿@model ArchiveDto
+
+    <form asp-action="@ViewBag.Action" enctype="multipart/form-data"
+          data-ajax="true" data-ajax-method="POST"
+          data-ajax-success="OnFormSuccess">
+
+        @if(ViewBag.Categories.Count > 0)
+        {
+            <div class="form-group row mb-3">
+                <label class="col-form-label col-lg-2">Kategori Seçiniz</label>
+                <div class="col-sm-10">
+                <select class="form-control form-control-select2" name="ArchiveCategoryId" data-fouc>
+                        <optgroup label="Kategoriler">
+                            <option value="-1" selected>Seçiniz</option>
+                            @foreach (var c in ViewBag.Categories)
+                            {
+                                if(Model != null && Model.Id > 0){
+                                    <!option value="@c.Id" @Html.Raw(c.Id == Model.ArchiveCategoryId ? "selected" : "")>@c.Name</!option>
+                                }
+                                else{
+                                    <option value="@c.Id">@c.Name</option>
+                                }
+                            }
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+        }
+        else{
+            <div>Veri eklenemez önce kategori ekle yada pasif ise aktif et</div>
+        }
+
+        @Html.Raw(formHelper.InputTextRow("Domain", Model.Domain, "Domain"))
+        @Html.Raw(formHelper.InputTextRow("Kullanıcı Adı", Model.Username, "Username"))
+        @Html.Raw(formHelper.InputTextRow("Password", Model.Password, "Password"))
+        @Html.Raw(formHelper.InputTextRow("Key", Model.Key, "Key"))
+        
+        @if (Model != null && Model.Id > 0)
+        {
+            <div class="form-group row" id="pass_button">
+                <label class="control-label text-md-right text-xs-left col-sm-2 mt-1 p-0">-</label>
+                <div class="col-sm-6">
+                    <button type="button" class="btn btn-light" id="showPass">Şifremi Göster <i class="icon-play3 ml-2"></i></button>
+                </div>
+            </div>
+        }
+
+        @Html.Raw(formHelper.InputTextRow("Ad Soyad", Model.Fullname, "Fullname"))
+        @Html.Raw(formHelper.InputTextRow("Telefon", Model.Phone, "Phone"))
+        @Html.Raw(formHelper.InputTextRow("Doğum Tarihi", Model.BirthDate, "BirthDate"))
+
+        <div class="form-check form-switch mb-2">
+            <label class="form-check-label">Aktif Mi?</label>
+            @Html.CheckBoxFor(a => a.IsActive, new { @class = "form-check-input" })
+        </div>
+
+        <input asp-for="UserId" value="@User.GetUserId()" type="hidden" />
+        @if (Model != null && Model.Id > 0)
+        {
+            <input asp-for="Id" type="hidden" />
+            @Html.Raw(formHelper.UpdateButtonRow("Güncelle"))
+        }
+        else
+        {
+            @Html.Raw(formHelper.SubmitButtonRow("Ekle"))
+        }
+
+    </form>
+
+            

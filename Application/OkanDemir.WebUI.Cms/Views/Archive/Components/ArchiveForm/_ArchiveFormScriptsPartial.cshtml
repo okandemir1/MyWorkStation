@@ -1,0 +1,50 @@
+﻿<script>
+    $(document).ready(function(){
+        $("select[name='ArchiveCategoryId']").select2();
+        $("#showPass").click(function () {
+            var id = $("input[name='Id']").val();
+            var key = $("input[name='Key']").val();
+            if (key.length <= 0) {
+                layout.error_message("Dikkat","Key boş bırakılamaz");
+                return false;
+            }
+
+            var data = { id:id,key:key };
+
+            $.ajax({
+                type: "POST",
+                url: "/Archive/ShowPass",
+                data: data,
+                success: function(e){
+                    if(e.isSucceed){
+                        $("input[name='Password']").val(e.instance.password);
+                        $("input[name='Username']").val(e.instance.username);
+                        $("input[name='Phone']").val(e.instance.phone);
+                        $("#pass_button").hide();
+                    }
+                    else {
+                        layout.error_message("Hay Aksi", "Key hatalı galiba");
+                    }
+                },
+                fail:function(x){
+                    layout.error_message("Sorun var", "Bir hata oldu bunu test etmem gerek");
+                }
+            });
+        });
+    });
+
+    function OnFormSuccess(result) {
+        if (result.isSucceed) {
+            layout.success_action_message("Başarılı", result.message, "/Archive/");
+        }
+        else {
+            if (result.errors != null && result.errors.length > 0) {
+                layout.error_message_list("Hay Aksi", result.message, result.errors)
+            }
+            else {
+                layout.error_message("Hay Aksi", result.message);
+            }
+        }
+    };
+    
+</script>

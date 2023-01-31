@@ -1,0 +1,16 @@
+﻿
+<script>
+    function OnFormSuccess(result) {
+        if (result.isSucceed) {
+            layout.success_action_message("Başarılı", result.message, "/IncomeType/");
+        }
+        else {
+            if (result.errors != null && result.errors.length > 0) {
+                layout.error_message_list("Hay Aksi", result.message, result.errors)
+            }
+            else {
+                layout.error_message("Hay Aksi", result.message);
+            }
+        }
+    };
+</script>

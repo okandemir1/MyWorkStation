@@ -1,0 +1,41 @@
+﻿@model InvoiceTypeDto
+
+@{
+    var title = "Fatura Tipi Ekle";
+    ViewData["Title"] = title;
+}
+
+@Html.Raw(bread.BreadCrumb(
+    new List<Bc>() {
+        new Bc("Dashboard", Url.Action("Index","Home")),
+        new Bc("Liste", Url.Action("Index","InvoiceType")),
+        new Bc(title , "")
+    }
+))
+
+@Html.Raw(pageHeader.MainHeader(
+    title,
+    "",
+    "Listeye Dön",
+    Url.Action("Index","InvoiceType")
+))
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">@title</h5>
+                </div>
+                <div class="card-body">
+                    @await Component.InvokeAsync("InvoiceTypeForm", new { action = "Create", Model = new InvoiceTypeDto() })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+@section Scripts
+{
+    @await Html.PartialAsync("Components/InvoiceTypeForm/_InvoiceTypeFormScriptsPartial")
+}

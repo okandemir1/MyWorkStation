@@ -1,0 +1,28 @@
+﻿@model ArchiveCategoryDto
+
+    <form asp-action="@ViewBag.Action" enctype="multipart/form-data"
+          data-ajax="true" data-ajax-method="POST"
+          data-ajax-success="OnFormSuccess">
+
+        @Html.Raw(ViewResultHelperExtension.ViewResult(ViewBag.Result))
+
+        @Html.Raw(formHelper.InputTextRow("Kategori Adı", Model.Name, "Name"))
+        @Html.Raw(formHelper.InputTextRow("Kısa Açıklama", Model.Summary, "Summary"))
+
+        <div class="form-check form-switch mb-2">
+            <label class="form-check-label">Aktif Mi?</label>
+            @Html.CheckBoxFor(a => a.IsActive, new { @class = "form-check-input" })
+        </div>
+
+        <input asp-for="UserId" value="@User.GetUserId()" type="hidden" />
+        @if (Model != null && Model.Id > 0)
+        {
+            <input asp-for="Id" type="hidden" />
+            @Html.Raw(formHelper.UpdateButtonRow("Güncelle"))
+        }
+        else
+        {
+            @Html.Raw(formHelper.SubmitButtonRow("Ekle"))
+        }
+
+    </form>

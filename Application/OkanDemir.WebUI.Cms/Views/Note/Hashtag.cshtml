@@ -1,0 +1,168 @@
+﻿@model List<HashtagDto>
+@{
+    var title = "Hashtag";
+    ViewBag.Title = title;
+}
+
+@Html.Raw(bread.BreadCrumb(
+    new List<Bc>() {
+        new Bc("Dashboard", Url.Action("Index","Home")),
+        new Bc(title , "")
+    }
+))
+
+@Html.Raw(pageHeader.MainHeader(
+    title,
+    ""
+))
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">@title</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-10 mb-3">
+                            <input placeholder="Ara..." class="form-control" id="contentSearchInput">
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-success" id="filterButton">Filtrele</button>
+                        </div>
+                        <div class="col-12">
+                            <span class="text-muted text-small datatable-outofbox-infotext"> </span>
+                            <button class="btn btn-outline-dark btn-xs dropdown-toggle datatable-outofbox-lengthtext" type="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                10
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right datatable-outofbox-length">
+                                <a class="dropdown-item datatable-outofbox-dropdownButton">10</a>
+                                <a class="dropdown-item datatable-outofbox-dropdownButton">20</a>
+                                <a class="dropdown-item datatable-outofbox-dropdownButton">30</a>
+                                <a class="dropdown-item datatable-outofbox-dropdownButton">50</a>
+                                <a class="dropdown-item datatable-outofbox-dropdownButton">100</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive px-2 border-0">
+                    <table class="table table-bordered table-hover table-striped" id="contentDataTable">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Adı</th>
+                                <th>-</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+        var oTable;
+        $(document).ready(function () {
+            oTable = main.CreateDatatable('#contentDataTable',
+                {
+                    serverSide: true,
+                    ajax: {
+                        url: "@Url.Action("GetHashtagList", "Note")",
+                        "type": "POST",
+                        "datatype": "json",
+                        data: function (d) {
+                            d.UserId = "@User.GetUserId()";
+                        },
+                    },
+                    "columns": [
+                        { "data": "id", "name": "Id", "autoWidth": true },
+                        { "data": "name", "name": "Name", "autoWidth": true },
+                        {
+                            "data": "id", "name": "Id", "autoWidth": true,
+                            "render": function (data, type, full, meta) {
+                                var retHtml = "";
+                                retHtml += '<a class="badge bg-primary me-2" href="/Note/HashtagNotes/' + full.id + '">Notları Göster</a>';
+                                retHtml += '<a class="badge bg-danger" data-id="' + full.id + '">Sil</a>';
+                                return retHtml;
+                            }
+                        },
+                    ]
+                });
+
+            $("body").on("click", "#filterButton", function () {
+                oTable.search($("#contentSearchInput").val());
+                oTable.draw();
+            });
+
+            $('body').keypress(function (event) {
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                if (keycode == '13') {
+                    event.preventDefault();
+                }
+            });
+
+            $('#contentSearchInput').keypress(function (event) {
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                if (keycode == '13') {
+                    oTable.search($("#contentSearchInput").val());
+                    oTable.draw();
+                }
+            });
+
+            const swalInit = swal.mixin({
+                buttonsStyling: false,
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger',
+                    denyButton: 'btn btn-danger',
+                    input: 'form-control'
+                }
+            });
+
+            $("body").on("click", ".bg-danger", function () {
+                var id = $(this).attr("data-id");
+                swalInit.fire({
+                    title: 'Emin misiniz?',
+                    text: "Seçtiğiniz veri sistemden silinecektir ve bu hashtag ile ilgili notların varsa onlarıda sileceğimi bilmeni isterim, notlar senin için önemlisi ise notlara gidip oradan # işaretini kaldır ki hashtag bağlantısı kaybolsun",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Evet, Sil',
+                    cancelButtonText: 'İptal',
+                    buttonsStyling: false,
+                    customClass: {
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-danger'
+                    }
+                }).then(function (result) {
+                    if (result.value) {
+                        $.get("/Note/HashtagDelete/" + id, function (e) {
+                            if (e.isSucceed) {
+                                swalInit.fire({
+                                    title: "Başarılı",
+                                    text: e.message,
+                                    icon: "success"
+                                }).then((willClick) => {
+                                    location.reload();
+                                });
+                            }
+                            else {
+                                swalInit.fire({
+                                    title: "Hay Aksi",
+                                    text: e.message,
+                                    icon: "warning"
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}

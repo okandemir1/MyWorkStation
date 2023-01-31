@@ -1,0 +1,31 @@
+﻿@model ExpenseDto
+
+    <form asp-action="@ViewBag.Action" enctype="multipart/form-data"
+          data-ajax="true" data-ajax-method="POST"
+          data-ajax-success="OnFormSuccess">
+
+        @Html.Raw(formHelper.InputTextRow("Başlık", Model.Title, "Title"))
+        @Html.Raw(formHelper.InputTextRow("Kısa Açıklama", Model.Summary, "Summary"))
+        @Html.Raw(formHelper.InputTextRow("Tutar", Model.Price, "Price"))
+        @Html.Raw(formHelper.FileRow("Dosya", "file"))
+        @Html.Raw(formHelper.InputDateRow("Ödeme Tarihi", Model.ExpenseDate, "ExpenseDate"))
+        
+        <div class="form-check form-switch mb-2">
+            <label class="form-check-label">Ödendi Mi?</label>
+            @Html.CheckBoxFor(a => a.HasPayment, new { @class = "form-check-input" })
+        </div>
+
+        <input asp-for="UserId" value="@User.GetUserId()" type="hidden" />
+        @if (Model != null && Model.Id > 0)
+        {
+            <input asp-for="Id" type="hidden" />
+            @Html.Raw(formHelper.UpdateButtonRow("Güncelle"))
+        }
+        else
+        {
+            @Html.Raw(formHelper.SubmitButtonRow("Ekle"))
+        }
+
+    </form>
+
+            

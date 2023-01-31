@@ -1,0 +1,46 @@
+﻿@model CodeNoteDto
+@{
+    var title = "Kod Detayı";
+    ViewData["Title"] = title;
+}
+
+@Html.Raw(bread.BreadCrumb(
+    new List<Bc>() {
+        new Bc("Dashboard", Url.Action("Index","Home")),
+        new Bc("Liste", Url.Action("Index","CodeNote")),
+        new Bc(title , "")
+    }
+))
+
+@Html.Raw(pageHeader.MainHeader(
+    title,
+    "",
+    "Listeye Dön",
+    Url.Action("Index","CodeNote")
+))
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">@title</h5>
+                </div>
+                <div class="card-body">
+                    <p>Özet : @Model.Summary</p>
+                    @Html.Raw(Model.Description)
+                    @if (!string.IsNullOrEmpty(Model.Code))
+                    {
+                        <p class="font-weight-semibold">Kod Bölümü</p>
+                        <pre class="line-numbers mb-0 language-markup"><code>@Html.Raw(Model.Code)</code></pre>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="https://demo.interface.club/limitless/demo/template/assets/js/vendor/ui/prism.min.js"></script>
+}

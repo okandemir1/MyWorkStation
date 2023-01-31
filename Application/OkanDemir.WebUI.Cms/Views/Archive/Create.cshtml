@@ -1,0 +1,46 @@
+﻿@model ArchiveDto
+
+@{
+    var title = "Arşiv Ekle";
+    ViewData["Title"] = title;
+}
+
+@Html.Raw(bread.BreadCrumb(
+    new List<Bc>() {
+        new Bc("Dashboard", Url.Action("Index","Home")),
+        new Bc("Liste", Url.Action("Index","Archive")),
+        new Bc(title , "")
+    }
+))
+
+@Html.Raw(pageHeader.MainHeader(
+    title,
+    "",
+    "Listeye Dön",
+    Url.Action("Index","Archive")
+))
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">@title</h5>
+                </div>
+                <div class="card-body">
+                    @await Component.InvokeAsync("ArchiveForm", new { action = "Create", Model = new ArchiveDto() })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+@section Styles
+{
+  @await Html.PartialAsync("Components/ArchiveForm/_ArchiveFormStylesPartial") 
+}
+
+@section Scripts
+{
+  @await Html.PartialAsync("Components/ArchiveForm/_ArchiveFormScriptsPartial")
+}

@@ -1,0 +1,58 @@
+﻿@model MetionNoteDto
+@{
+    var title = "Metion Detay";
+    ViewBag.Title = title;
+}
+
+@Html.Raw(bread.BreadCrumb(
+    new List<Bc>() {
+        new Bc("Dashboard", Url.Action("Index","Home")),
+        new Bc("Metions", Url.Action("Metion","Note")),
+        new Bc(title , "")
+    }
+))
+
+@Html.Raw(pageHeader.MainHeader(
+    title,
+    ""
+))
+
+<div class="content">
+    <div class="card">
+        <div class="card-header header-elements-inline">
+            <h5 class="card-title">@title</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <td>-</td>
+                        <td>Not Tarihi</td>
+                        <td>Not</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{var counter = 0;}
+                    @if (Model.Notes != null && Model.Notes.Count > 0)
+                    {
+                        foreach (var a in Model.Notes)
+                        {
+                            counter++;
+                            <tr>
+                                <td>@counter</td>
+                                <td>@a.CreateDate.ToString("dd.MM.yyyy")</td>
+                                <td>@Html.Raw(a.Description)</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="3">Bir sorun olabilir, yada bu metion'a notu silmiş olabilirsin çünkü not bulunamadı.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

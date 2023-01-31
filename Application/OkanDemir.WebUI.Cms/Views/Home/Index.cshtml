@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+}
+
+@Html.Raw(bread.BreadCrumb(
+    new List<Bc>() {
+        new Bc("Dashboard" , "")
+    }
+))
+
+<div class="content">
+    <div class="row">
+        <div class="col-sm-6 col-xl-3">
+			<div class="card card-body bg-success text-white">
+				<div class="d-flex align-items-center">
+					<div class="flex-fill">
+						<h4 class="mb-0">213</h4>
+						Toplam Onaylı Kullanıcı
+					</div>
+
+					<i class="icon-user-check icon-2x opacity-75 ms-3"></i>
+				</div>
+			</div>
+		</div>
+    </div>
+</div>

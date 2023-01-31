@@ -1,0 +1,151 @@
+﻿@{
+    var title = "Abonelik Tipleri Listesi";
+    ViewData["Title"] = title;
+}
+
+@Html.Raw(bread.BreadCrumb(
+    new List<Bc>() {
+        new Bc("Dashboard", Url.Action("Index","Home")),
+        new Bc(title , "")
+    }
+))
+
+@Html.Raw(pageHeader.MainHeader(
+    title,
+    "",
+    "Yeni Ekle",
+    Url.Action("Create","SubscriptionType")
+))
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">@title</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-10 mb-3">
+                            <input placeholder="Ara..." class="form-control" id="contentSearchInput">
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-success" id="filterButton">Filtrele</button>
+                        </div>
+                        <div class="col-12">
+                            <span class="text-muted text-small datatable-outofbox-infotext"> </span>
+                            <button class="btn btn-outline-dark btn-xs dropdown-toggle datatable-outofbox-lengthtext" type="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                10
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right datatable-outofbox-length">
+                                <a class="dropdown-item datatable-outofbox-dropdownButton">10</a>
+                                <a class="dropdown-item datatable-outofbox-dropdownButton">20</a>
+                                <a class="dropdown-item datatable-outofbox-dropdownButton">30</a>
+                                <a class="dropdown-item datatable-outofbox-dropdownButton">50</a>
+                                <a class="dropdown-item datatable-outofbox-dropdownButton">100</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive px-2 border-0">
+                    <table class="table table-bordered table-hover table-striped" id="contentDataTable">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Adı</th>
+                                <th>Aktif Mi?</th>
+                                <th>-</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+        var oTable;
+        $(document).ready(function () {
+            oTable = main.CreateDatatable('#contentDataTable',
+                {
+                    serverSide: true,
+                    ajax: {
+                        url: "@Url.Action("GetList", "SubscriptionType")",
+                        "type": "POST",
+                        "datatype": "json",
+                        data: function (d) {
+                            d.UserId = "@User.GetUserId()";
+                        },
+                    },
+                    "columns": [
+                        { "data": "id", "name": "Id", "autoWidth": true },
+                        { "data": "title", "name": "Title", "autoWidth": true },
+                        {
+                            "data": "id", "name": "Id", "autoWidth": true,
+                            "render": function (data, type, full, meta) {
+                                var retHtml = "";
+                                if(full.isActive){
+                                    retHtml += '<span class="badge bg-success passive" data-id="'+full.id+'">Aktif</span>';
+                                }
+                                else{
+                                    retHtml += '<span class="badge bg-danger active" data-id="' + full.id + '">Pasif</span>';
+                                }
+                                return retHtml;
+                            }
+                        },
+                        {
+                            "data": "id", "name": "Id", "autoWidth": true,
+                            "render": function (data, type, full, meta) {
+                                var retHtml = "";
+                                retHtml += '<a class="badge bg-primary me-2" href="/SubscriptionType/Edit/' + full.id + '">Düzenle</a>';
+                                retHtml += '<a class="badge bg-danger delete" data-id="' + full.id + '">Sil</a>';
+                                return retHtml;
+                            }
+                        },
+                    ]
+                });
+
+            $("body").on("click", "#filterButton", function () {
+                oTable.search($("#contentSearchInput").val());
+                oTable.draw();
+            });
+
+            $('body').keypress(function (event) {
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                if (keycode == '13') {
+                    event.preventDefault();
+                }
+            });
+
+            $('#contentSearchInput').keypress(function (event) {
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                if (keycode == '13') {
+                    oTable.search($("#contentSearchInput").val());
+                    oTable.draw();
+                }
+            });
+
+            $("body").on("click", ".delete", function () {
+                var id = $(this).attr("data-id");
+                layoutJsHelper.deleteItem("SubscriptionType", id);
+            });
+
+            $("body").on("click", ".passive", function () {
+                var id = $(this).attr("data-id");
+                layoutJsHelper.passive("SubscriptionType", id);
+            });
+
+            $("body").on("click", ".active", function () {
+                var id = $(this).attr("data-id");
+                layoutJsHelper.active("SubscriptionType", id);
+            });
+        });
+    </script>
+}
