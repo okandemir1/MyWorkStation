@@ -1,0 +1,58 @@
+﻿@model List<TodoProjectDto>
+@{
+	var title = "Todo Proje Listesi";
+	ViewData["Title"] = title;
+}
+
+@Html.Raw(bread.BreadCrumb(
+		new List<Bc>() {
+		new Bc("Dashboard", Url.Action("Index","Home")),
+		new Bc(title , "")
+	}
+	))
+
+@Html.Raw(pageHeader.MainHeader(
+		title,
+		"",
+		"Yeni Ekle",
+		Url.Action("Create", "TodoProject")
+	))
+
+
+<div class="content">
+	<div class="row">
+		@foreach (var item in Model)
+		{
+			<div class="col-md-3 col-sm-12">
+				<div class="card">
+					<div class="card-header border-0 d-flex flex-wrap">
+						<h6 class="mb-0">@item.Title</h6>
+						<div class="d-inline-flex ms-auto" style="align-items:center;">
+							<a class="text-body" href="@Url.Action("Edit","TodoProject", new { id = item.Id })">
+								<i class="ph-note-pencil"></i>
+							</a>
+							<a class="text-body mx-2" href="@Url.Action("Index","Todo", new { id = item.Id })">
+								<i class="ph-list-checks"></i>
+							</a>
+							<a class="text-body cursor-pointer delete" data-id="@item.Id">
+								<i class="ph-trash"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+</div>
+
+
+@section scripts {
+	<script>
+		$(document).ready(function () {
+			$("body").on("click", ".delete", function () {
+				var id = $(this).attr("data-id");
+				layoutJsHelper.deleteItem("TodoProject", id);
+			});
+		});
+	</script>
+}

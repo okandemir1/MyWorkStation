@@ -59,6 +59,7 @@ namespace OkanDemir.Application.Cms
             services.AddScoped<SubscriptionBusiness>();
             services.AddScoped<SubscriptionTypeBusiness>();
             services.AddScoped<NoteBusiness>();
+            services.AddScoped<TodoBusiness>();
 
             //Services
             services.AddScoped<SmsService>();

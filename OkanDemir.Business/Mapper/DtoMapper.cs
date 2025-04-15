@@ -25,6 +25,7 @@ namespace OkanDemir.Business.Mapper
             CreateMap<NoteDto, Note>().ReverseMap();
             CreateMap<RegisterRequestDto, UserDto>().ReverseMap();
             CreateMap<RegisterRequestDto, User>().ReverseMap();
+            CreateMap<TodoProject, TodoProjectDto>().ReverseMap();
         }
     }
 }
