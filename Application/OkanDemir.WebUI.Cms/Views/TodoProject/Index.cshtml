@@ -31,7 +31,7 @@
 							<a class="text-body" href="@Url.Action("Edit","TodoProject", new { id = item.Id })">
 								<i class="ph-note-pencil"></i>
 							</a>
-							<a class="text-body mx-2" href="@Url.Action("Index","Todo", new { id = item.Id })">
+							<a class="text-body mx-2" href="@Url.Action("Index","Todo", new { projectId = item.Id })">
 								<i class="ph-list-checks"></i>
 							</a>
 							<a class="text-body cursor-pointer delete" data-id="@item.Id">

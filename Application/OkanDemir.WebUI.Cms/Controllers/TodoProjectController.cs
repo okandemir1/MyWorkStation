@@ -9,10 +9,10 @@ namespace OkanDemir.WebUI.Cms.Controllers
     [Authorize]
     public class TodoProjectController : Controller
     {
-        TodoBusiness _todoBusiness;
+        TodoProjectBusiness _todoBusiness;
         CacheHelper _cache;
 
-        public TodoProjectController(TodoBusiness _todoBusiness, CacheHelper _cache)
+        public TodoProjectController(TodoProjectBusiness _todoBusiness, CacheHelper _cache)
         {
             this._todoBusiness = _todoBusiness;
             this._cache = _cache;

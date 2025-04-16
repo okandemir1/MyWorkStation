@@ -1,0 +1,55 @@
+﻿@model TodoViewModel
+@{
+	var title = "Todo";
+	ViewData["Title"] = title;
+}
+
+@Html.Raw(bread.BreadCrumb(
+				new List<Bc>() {
+		new Bc("Dashboard", Url.Action("Index","Home")),
+		new Bc(title , "")
+	}
+			))
+
+@Html.Raw(pageHeader.MainHeader(
+			title,
+			"",
+			"Yeni Ekle",
+			Url.Action("Create", "TodoProject")
+		))
+
+
+<div class="content todoList">
+	@foreach (var table in Model.TodoTables)
+	{
+		var todos = Model.TodoLists.Where(x => x.TodoTableId == table.Id).ToList();
+		<div class="todoTable">
+			<div class="tableHeader">
+				<h3>@table.Title</h3>
+			</div>
+			@foreach (var todo in todos)
+			{
+				var color = Model.TodoListTypes.Where(x => x.Id == todo.TodoListTypeId).FirstOrDefault()?.Color;
+				<div class="todoCard border border-@color rounded">
+					<div class="cardTitle">
+						<div>@todo.Title</div>
+						<div><i class="ph-currency-circle-dollar"></i></div>
+					</div>
+					<div class="cardSummary">@todo.Summary</div>
+				</div>
+			}
+		</div>
+	}
+</div>
+
+
+@section scripts {
+	<script>
+		$(document).ready(function () {
+			$("body").on("click", ".delete", function () {
+				var id = $(this).attr("data-id");
+				layoutJsHelper.deleteItem("TodoProject", id);
+			});
+		});
+	</script>
+}
