@@ -34,6 +34,9 @@
 							<a class="text-body mx-2" href="@Url.Action("Index","Todo", new { projectId = item.Id })">
 								<i class="ph-list-checks"></i>
 							</a>
+							<a class="text-body me-2" href="@Url.Action("Index","Todo", new { projectId = item.Id })">
+								<i class="ph-table"></i>
+							</a>
 							<a class="text-body cursor-pointer delete" data-id="@item.Id">
 								<i class="ph-trash"></i>
 							</a>
